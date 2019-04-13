@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {PagesComponent} from './pages.component';
 import {NotFoundComponent} from './miscellaneous/not-found/not-found.component';
+import {TestPageComponent} from './test-page/test-page.component';
 
 const routes: Routes = [{
   path: '',
@@ -11,6 +12,7 @@ const routes: Routes = [{
     path: '',
     redirectTo: '',
     pathMatch: 'full',
+  }, { path: 'test-page', component: TestPageComponent
   }, {
     path: '**',
     component: NotFoundComponent,
