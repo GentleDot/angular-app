@@ -1,6 +1,6 @@
-import { of as observableOf,  Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { Contacts, RecentUsers, UserData } from '../data/users';
+import {Observable, of as observableOf} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Contacts, RecentUsers, UserData} from '../data/users';
 
 @Injectable()
 export class UserService extends UserData {
@@ -8,7 +8,7 @@ export class UserService extends UserData {
   private time: Date = new Date;
 
   private users = {
-    lee: { name: '이현수', picture: 'assets/images/nick.png' },
+    lee: {name: '백상일', picture: 'assets/images/alan.png'},
     eva: { name: 'Eva Moor', picture: 'assets/images/eva.png' },
     jack: { name: 'Jack Williams', picture: 'assets/images/jack.png' },
     alan: { name: 'Alan Thompson', picture: 'assets/images/alan.png' },
