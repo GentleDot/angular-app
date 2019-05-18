@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
-import {GetDbDataService} from '../../../services/get-db-data.service';
+import {TestDbDataService} from '../../../services/test-db-data.service';
 
 @Component({
   selector: 'ngx-test-page',
   templateUrl: './test-page.component.html',
-  styleUrls: ['./test-page.component.scss']
+  styleUrls: ['./test-page.component.scss'],
 })
 export class TestPageComponent implements OnInit {
-  constructor(private service: GetDbDataService) {
+  constructor(private service: TestDbDataService) {
   }
 
   ngOnInit(): void {
@@ -25,6 +25,7 @@ export class TestPageComponent implements OnInit {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
@@ -37,24 +38,36 @@ export class TestPageComponent implements OnInit {
     },
     columns: {
       MemberNo: {
-        title: 'ID',
+        title: 'No',
         type: 'number',
+        editable: false,
+        editor: {
+          type: 'checkbox',
+        },
       },
-      memberName: {
-        title: 'First Name',
+      MemberName: {
+        title: '사용자명',
         type: 'string',
       },
-      memberId: {
-        title: 'Last Name',
+      MemberId: {
+        title: '사용자 ID',
         type: 'string',
       },
-      memberRegDate: {
-        title: 'Username',
+      MemberRegDate: {
+        title: '가입일',
         type: 'string',
+        editable: false,
+        editor: {
+          type: 'checkbox',
+        },
       },
-      memberUpdDate: {
-        title: 'E-mail',
+      MemberUpdDate: {
+        title: '변경일',
         type: 'string',
+        editable: false,
+        editor: {
+          type: 'checkbox',
+        },
       },
     },
   };
@@ -62,12 +75,24 @@ export class TestPageComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
 
 
-  // onDeleteConfirm(event): void {
-  //   if (window.confirm('Are you sure you want to delete?')) {
-  //     event.confirm.resolve();
-  //   } else {
-  //     event.confirm.reject();
-  //   }
-  // }
+  onDeleteConfirm(event): void {
+    if (window.confirm('선택한 정보를 삭제합니다. 진행하시겠습니까?')) {
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+
+  onCreateConfirm(event): void {
+    if (window.confirm('입력한 정보로 생성하시겠습니까?')) {
+      // event.confirm.resolve(event.newData);
+      this.service.createData(event.newData).subscribe(res => {
+        event.confirm.resolve();
+      });
+    } else {
+      event.confirm.reject();
+    }
+  }
 
 }
