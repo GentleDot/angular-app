@@ -1,37 +1,33 @@
-<!--<div>
-  <form action="http://localhost:8080//api/v1/member/newMember" method="post">
-    <label for="memberId">아이디 : </label>
-    <input type="text" id="memberId" name="memberId"/>
-    <label for="memberName">이름 : </label>
-    <input type="text" id="memberName" name="memberName">
-    <i class="nb-checkmark">저장</i>
-  </form>
-</div>-->
-
-<!--<div class="row">
-  <div class="col-md-12">
-    <nb-card class="inline-form-card">
-      <nb-card-header>Inline form</nb-card-header>
-      <nb-card-body>
-        <form class="form-inline">
-          <input type="text" class="col-md-6 form-control full-width" placeholder="아이디">
-          <input type="text" class="col-md-6 form-control full-width" placeholder="이름">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </nb-card-body>
-    </nb-card>
-  </div>
-</div>-->
-
-
 <nb-card>
   <nb-card-header>
-    Smart Table
+    데이터 입력 테스트
   </nb-card-header>
 
   <nb-card-body>
-    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
-                     (createConfirm)="onCreateConfirm($event)">
+    <button type="button" class="btn btn-primary" (click)="popupOpen(newUserComponent)">멤버추가</button>
+    <ng2-smart-table [settings]="settings" [source]="source">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>
+
+<ng-template #newUserComponent>
+  <form [formGroup]="memberForm" (ngSubmit)="btnConfirm(inputUser.value, inputName.value)">
+    <div>
+      <input type="text" id="userId" #inputUser nbInput required placeholder="아이디" formControlName="userId"/>
+      <p class="text-primary" *ngIf="memberForm.controls.userId.hasError('minlength')">아이디는 4자리 이상 입력 가능합니다.</p>
+      <p class="text-danger" *ngIf="memberForm.controls.userId.hasError('pattern')">유효하지 않은 아이디 입력!</p>
+    </div>
+    <div>
+      <input type="text" id="userName" #inputName nbInput required placeholder="이름" formControlName="userName"/>
+      <p class="text-primary" *ngIf="memberForm.controls.userName.hasError('minlength')">이름 2자리 이상 입력 가능합니다.</p>
+      <p class="text-danger" *ngIf="memberForm.controls.userName.hasError('pattern')">유효하지 않은 이름 입력!</p>
+    </div>
+    <div>
+      <button type="button" nbButton outline status="info" (click)="memberForm.reset()">취소</button>
+      <button type="submit" class="btn-success" nbButton outline status="success" [disabled]="!memberForm.valid">전송
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+
