@@ -23,7 +23,7 @@ export class TestPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.test();
+    this.loadData();
     this.member = new Member();
     this.memberForm = new FormGroup({
       'userId': new FormControl('', [
@@ -42,7 +42,7 @@ export class TestPageComponent implements OnInit {
   }
 
 
-  private async test(): Promise<any> {
+  private async loadData(): Promise<any> {
     const data = await this.service.getData();
     this.source.load(data.members);
   }
@@ -120,7 +120,7 @@ export class TestPageComponent implements OnInit {
       this.service.createData(this.member).subscribe(res => {
         console.log('생성완료!');
         // window.location.reload();
-        this.test();
+        this.loadData();
         this.setLastPage();
         this.newUserComponent.close();
       });
